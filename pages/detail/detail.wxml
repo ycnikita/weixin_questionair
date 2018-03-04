@@ -1,0 +1,46 @@
+<scroll-view class="container">
+  <view class="title">{{page.title}}</view>
+  <view class="des">{{page.des}}</view>
+  <view class="topics">
+    <form bindsubmit="bindFormSubmit">
+      <view class="topic-wrap" wx:key="index" wx:for="{{page.topics}}">
+        <block wx:if="{{item.type === 'prograph'}}">
+          <view class="topic-title">
+            {{item.content}}
+          </view>
+        </block>
+        <block wx:if="{{item.type === 'text'}}">
+          <view class="topic-title">
+            {{item.index ? (item.index + '. ') : ''}}{{item.content}}
+          </view>
+          <textarea name="{{item.index}}" class='text-area'></textarea>
+        </block>
+        <block wx:if="{{item.type === 'radio'}}">
+          <view class="topic-title">
+            {{item.index ? (item.index + '. ') : ''}}{{item.content}}
+          </view>
+          <radio-group id="{{item.index}}" class="radio-group" bindchange="radioChange">
+            <view>
+              <label class="radio item" wx:key="optionIndex" wx:for="{{item.items}}" wx:for-item="optionItem" wx:for-index="optionIndex">
+                <radio name="item.index" value="{{optionIndex}}"/>{{optionItem.content}}
+              </label>
+            </view>
+          </radio-group>
+        </block>
+        <block wx:if="{{item.type === 'checkbox'}}">
+          <view class="topic-title">
+            {{item.index ? (item.index + '. ') : ''}}{{item.content}}
+          </view>
+          <checkbox-group id="{{item.index}}" class="checkbox-group" bindchange="checkboxChange">
+            <view>
+              <label class="checkbox item" wx:key="optionIndex" wx:for="{{item.items}}" wx:for-item="optionItem" wx:for-index="optionIndex">
+                <checkbox name="item.index" value="{{optionIndex}}"/>{{optionItem.content}}
+              </label>
+            </view>
+          </checkbox-group>
+        </block>
+      </view>
+      <button form-type="submit" class="upload">提交问卷</button>
+    </form>
+  </view>
+</scroll-view>
