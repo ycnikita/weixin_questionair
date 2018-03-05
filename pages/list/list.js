@@ -24,7 +24,7 @@ Page({
       header: {
         'content-type': 'application/json'
       },
-      success: function (res) {
+      success: function (res, a, b) {
         if (+res.data.code === 200) {
           _this.setData({
             mockList: res.data.data
@@ -92,6 +92,7 @@ Page({
         id: e.currentTarget.id
       },
       success: (e) => {
+        app.globalData.token = e.header['set-cookie'];
         if(+e.data.code === 200) {
           app.globalData.detailData = e.data.data;
           wx.navigateTo({

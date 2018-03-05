@@ -101,26 +101,28 @@ Page({
   bindFormSubmit: function (e) {
     const answer = Object.assign({}, this.data.resultData, e.detail.value);
     console.log(answer)
-    // wx.request({
-    //   url: 'https://qs.chirsen.com/api/uploadAnswer', //仅为示例，并非真实的接口地址
-    //   data: {
-    //     id: app.globalData.detailData._id,
-    //     answer: answer
-    //   },
-    //   header: {
-    //     'content-type': 'application/json' // 默认值
-    //   },
-    //   success: function (res) {
-    //     if(+res.data.code === 200) {
-    //       app.app.globalData.detailData = null;
-    //       wx.navigateTo({
-    //         url: '../list/list'
-    //       });
-    //     } else {
+    wx.request({
+      url: 'https://qs.chirsen.com/api/uploadAnswer', //仅为示例，并非真实的接口地址
+      method: 'POST',
+      data: {
+        id: app.globalData.detailData._id,
+        answer: answer,
+        "_csrf": app.globalData.token
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        if(+res.data.code === 200) {
+          app.app.globalData.detailData = null;
+          wx.navigateTo({
+            url: '../list/list'
+          });
+        } else {
 
-    //     }
-    //   }
-    // })
+        }
+      }
+    })
   },
   /**
    * 用于收集选项数据
