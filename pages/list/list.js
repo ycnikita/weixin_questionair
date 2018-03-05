@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    touching: false,
     mockList: [{
       id: 1,
       title: '测试1',
@@ -21,7 +22,7 @@ Page({
       name: '颜生',
       cost: 1,
       time: 1
-      }, {
+    }, {
         id: 1,
         title: '测试1',
         hot: 1,
@@ -29,7 +30,63 @@ Page({
         name: '颜生',
         cost: 0,
         time: 1
-      }]
+    }, {
+      id: 2,
+      title: '测试1',
+      hot: 1,
+      date: '2018-03-01',
+      name: '颜生',
+      cost: 0,
+      time: 1
+    }, {
+      id: 2,
+      title: '测试1',
+      hot: 1,
+      date: '2018-03-01',
+      name: '颜生',
+      cost: 0,
+      time: 1
+    }, {
+      id: 2,
+      title: '测试1',
+      hot: 1,
+      date: '2018-03-01',
+      name: '颜生',
+      cost: 0,
+      time: 1
+    }, {
+      id: 2,
+      title: '测试1',
+      hot: 1,
+      date: '2018-03-01',
+      name: '颜生',
+      cost: 0,
+      time: 1
+    }, {
+      id: 2,
+      title: '测试1',
+      hot: 1,
+      date: '2018-03-01',
+      name: '颜生',
+      cost: 0,
+      time: 1
+    }, {
+      id: 2,
+      title: '测试1',
+      hot: 1,
+      date: '2018-03-01',
+      name: '颜生',
+      cost: 0,
+      time: 1
+    }, {
+      id: 2,
+      title: '测试1',
+      hot: 1,
+      date: '2018-03-01',
+      name: '颜生',
+      cost: 0,
+      time: 1
+    }]
   },
 
   /**
@@ -86,5 +143,25 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  /**
+   * 点击答题
+   */
+  toAnswer: function(e) {
+    wx.navigateTo({
+      url: '../detail/detail',
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
+  },
+  /**
+   * 触摸开始和结束
+   */
+  touchStart: function(e) {
+    this.data.touching = true;
+  },
+  touchEnd: function(e) {
+    this.data.touching = false;
   }
 })

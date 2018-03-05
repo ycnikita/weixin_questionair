@@ -1,7 +1,12 @@
 /* pages/list/list.wxss */
 .container{
-  position: relative;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   font-size: 26rpx;
+  border-top: solid 1rpx #eee;
 }
 
 .search-wrap{
@@ -83,7 +88,7 @@
   border-radius: 5px;
 }
 .red{
-  background: #CA5D54;
+  background: red;
 }
 .green{
   background: #73B567;
