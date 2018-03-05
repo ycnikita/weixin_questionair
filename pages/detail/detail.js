@@ -1,3 +1,4 @@
+const app = getApp();
 // pages/detail/detail.js
 Page({
 
@@ -5,72 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    page: {
-      title: '问卷标题',
-      des: '问卷描述',
-      topics: [
-        {
-          content: '段落描述',
-          'type': 'prograph'
-        }, {
-          content: '段落描述',
-          'type': 'prograph'
-        }, {
-          content: '段落描述',
-          'type': 'prograph'
-        }, {
-          content: '段落描述',
-          'type': 'prograph'
-        }, {
-          index: 1,
-          content: '填空题',
-          'type': 'text'
-        }, {
-          index: 2,
-          content: '单选题',
-          'type': 'radio',
-          items:[
-            {
-              content: '选项1',
-              'type': 'radio'
-            }, {
-              content: '选项2',
-              'type': 'radio'
-            }
-          ]
-        }, {
-          index: 3,
-          content: '多选题',
-          'type': 'checkbox',
-          items: [
-            {
-              content: '选项1',
-              'type': 'checkbox'
-            }, {
-              content: '选项2',
-              'type': 'checkbox'
-            }
-          ]
-        }, {
-          index: 4,
-          content: '填空题',
-          'type': 'text'
-        }, {
-          index: 5,
-          content: '单选题',
-          'type': 'radio',
-          items: [
-            {
-              content: '选项1',
-              'type': 'radio'
-            }, {
-              content: '选项2',
-              'type': 'radio'
-            }
-          ]
-        }
-      ]
-    },
+    page: {},
     topicIndex: 1,
     resultData: {}
   },
@@ -79,7 +15,23 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.dataInit();
+    this.initData(app.globalData.detailData);
+  },
+
+  /**
+   * 初始化数据
+   * 给题目加上编号
+   */
+  initData: function(data) {
+    let order = 1;
+    const topics = data.topics.map((item) => {
+      if(item.type !== 'prograph') {
+        item.index = order++;
+      }
+      return item;
+    });
+    data.topics = topics;
+    this.setData({ "page": data });
   },
 
   /**
@@ -129,12 +81,6 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-  /**
-   * 对获取到的数据进行初始化处理
-   */
-  dataInit: function(data) {
-    return data;
   },
   /**
    * radioChange函数

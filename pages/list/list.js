@@ -1,3 +1,4 @@
+const app = getApp();
 // pages/list/list.js
 Page({
 
@@ -6,94 +7,31 @@ Page({
    */
   data: {
     touching: false,
-    mockList: [{
-      id: 1,
-      title: '测试1',
-      hot: 1,
-      date: '2018-03-01',
-      name: '颜生',
-      cost: 1,
-      time: 1
-    }, {
-      id: 1,
-      title: '测试1',
-      hot: 1,
-      date: '2018-03-01',
-      name: '颜生',
-      cost: 1,
-      time: 1
-    }, {
-        id: 1,
-        title: '测试1',
-        hot: 1,
-        date: '2018-03-01',
-        name: '颜生',
-        cost: 0,
-        time: 1
-    }, {
-      id: 2,
-      title: '测试1',
-      hot: 1,
-      date: '2018-03-01',
-      name: '颜生',
-      cost: 0,
-      time: 1
-    }, {
-      id: 2,
-      title: '测试1',
-      hot: 1,
-      date: '2018-03-01',
-      name: '颜生',
-      cost: 0,
-      time: 1
-    }, {
-      id: 2,
-      title: '测试1',
-      hot: 1,
-      date: '2018-03-01',
-      name: '颜生',
-      cost: 0,
-      time: 1
-    }, {
-      id: 2,
-      title: '测试1',
-      hot: 1,
-      date: '2018-03-01',
-      name: '颜生',
-      cost: 0,
-      time: 1
-    }, {
-      id: 2,
-      title: '测试1',
-      hot: 1,
-      date: '2018-03-01',
-      name: '颜生',
-      cost: 0,
-      time: 1
-    }, {
-      id: 2,
-      title: '测试1',
-      hot: 1,
-      date: '2018-03-01',
-      name: '颜生',
-      cost: 0,
-      time: 1
-    }, {
-      id: 2,
-      title: '测试1',
-      hot: 1,
-      date: '2018-03-01',
-      name: '颜生',
-      cost: 0,
-      time: 1
-    }]
+    mockList: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var _this = this;
+    const requestTask = wx.request({
+      url: 'https://qs.chirsen.com/api/paperList', //仅为示例，并非真实的接口地址
+      data: {
+        uid: 'a',
+        imgId: 'b'
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        if (+res.data.code === 200) {
+          _this.setData({
+            mockList: res.data.data
+          });
+        }
+      }
+    })
   },
 
   /**
@@ -148,12 +86,20 @@ Page({
    * 点击答题
    */
   toAnswer: function(e) {
-    wx.navigateTo({
-      url: '../detail/detail',
-      success: function(res) {},
-      fail: function(res) {},
-      complete: function(res) {},
-    })
+    wx.request({
+      url: 'https://qs.chirsen.com/api/paper',
+      data: {
+        id: e.currentTarget.id
+      },
+      success: (e) => {
+        if(+e.data.code === 200) {
+          app.globalData.detailData = e.data.data;
+          wx.navigateTo({
+            url: '../detail/detail'
+          })
+        }
+      }
+    });
   },
   /**
    * 触摸开始和结束
