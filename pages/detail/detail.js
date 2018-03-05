@@ -99,8 +99,28 @@ Page({
    * 遍历detail中的值，放到resultData中
    */
   bindFormSubmit: function (e) {
-    Object.assign(this.data.resultData, e.detail.value);
-    console.log(this.data.resultData);
+    const answer = Object.assign({}, this.data.resultData, e.detail.value);
+    console.log(answer)
+    // wx.request({
+    //   url: 'https://qs.chirsen.com/api/uploadAnswer', //仅为示例，并非真实的接口地址
+    //   data: {
+    //     id: app.globalData.detailData._id,
+    //     answer: answer
+    //   },
+    //   header: {
+    //     'content-type': 'application/json' // 默认值
+    //   },
+    //   success: function (res) {
+    //     if(+res.data.code === 200) {
+    //       app.app.globalData.detailData = null;
+    //       wx.navigateTo({
+    //         url: '../list/list'
+    //       });
+    //     } else {
+
+    //     }
+    //   }
+    // })
   },
   /**
    * 用于收集选项数据

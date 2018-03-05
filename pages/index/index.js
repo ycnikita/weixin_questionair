@@ -6,8 +6,7 @@ Page({
   data: {
     motto: '欢迎来到广布问卷',
     userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    hasUserInfo: false
   },
   //事件处理函数
   bindViewTap: function() {
