@@ -113,5 +113,8 @@ Page({
   },
   touchEnd: function(e) {
     this.data.touching = false;
-  }
+  },
+  getUid: function(e) {
+    
+  } 
 })
