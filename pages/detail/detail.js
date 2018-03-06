@@ -111,11 +111,12 @@ Page({
       this.tipShow(2, '请完成问卷再提交～');
       return;
     }
+    const answerTotal = this.groupData(app.globalData.userInfo, answer);
     wx.request({
       url: 'https://qs.chirsen.com/api/uploadAnswer?_csrf=' + token, //仅为示例，并非真实的接口地址
       data: {
         id: app.globalData.detailData._id,
-        answer: JSON.stringify(answer)
+        answer: JSON.stringify(answerTotal)
       },
       header: {
         'content-type': 'application/json', // 默认值
@@ -124,7 +125,11 @@ Page({
       success: function (res) {
         if(+res.data.code === 200) {
           app.globalData.detailData = null;
-          _this.tipShow(1, '感谢您的参与');
+          _this.tipShow(1, '感谢您的参与', () => {
+            wx.navigateTo({
+              url: '../list/list'
+            });
+          });
         } else {
           _this.tipShow(3, '系统忙，请稍后提交');
         }
@@ -138,9 +143,6 @@ Page({
     this.setData({
       showMask: false
     });
-    wx.navigateTo({
-      url: '../list/list'
-    });
   },
   /**
    * 用于收集选项数据
@@ -149,9 +151,20 @@ Page({
     this.data.resultData[id] = val;
   },
   /**
-   * 
+   * 用于组装上行数据
    */
-  tipShow: function (type, text) {
+  groupData: function(userInfo, answer) {
+    const answerInfo = { answer: answer };
+    // 填装userInfo
+    answerInfo.userNickname = userInfo.nickName;
+    answerInfo.city = userInfo.nickName+','+userInfo.city;
+    answerInfo.imgId = userInfo.avatarUrl.split('/').slice(-2).join('').substr(-8);
+    return answerInfo;
+  },
+  /**
+   * 展示提示
+   */
+  tipShow: function (type, text, cb) {
     this.setData({
       showMask: type,
       tip: text
@@ -161,6 +174,7 @@ Page({
         showMask: 0,
         tip: ''
       });
+      cb && cb();
     }, 2000);
   }
 })
