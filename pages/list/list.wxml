@@ -25,9 +25,9 @@
             bindtap="toAnswer"
             id="{{item._id}}"
             style="opacity: {{touching ? 0.5 : 1}};"
-            class="start-btn {{item.cost === 0 ? 'green' : 'red' }}">
+            class="start-btn {{item.cost == 0 ? 'green' : 'red' }}">
         <view>答题</view>
-        <view  wx:if="{{item.cost != 0}}" class="cost-text">获取答题红包</view>
+        <view  wx:if="{{item.cost != 0}}" class="cost-text">参与红包答题</view>
         <view  wx:else class="cost-text">免费参与答题</view>
       </view>
     </view>
