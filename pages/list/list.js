@@ -92,7 +92,10 @@ Page({
         id: e.currentTarget.id
       },
       success: (e) => {
-        app.globalData.token = e.header['set-cookie'];
+        const cookie = e.header['set-cookie'];
+        const token = cookie && cookie.split(';');
+        const crf = token && token[0].split('=');
+        app.globalData.token = crf && crf[1];
         if(+e.data.code === 200) {
           app.globalData.detailData = e.data.data;
           wx.navigateTo({

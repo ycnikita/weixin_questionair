@@ -33,3 +33,28 @@
 .upload{
   margin-top: 60rpx;
 }
+/* mask  */
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+.mask .icon-wrap{
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.icon-wrap .icon{
+  position: relative;
+  transform: scale(4);
+}
+.icon-wrap .tip{
+  position: relative;
+  transform: translateY(150%);
+  color: white;
+}

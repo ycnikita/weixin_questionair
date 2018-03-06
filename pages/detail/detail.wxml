@@ -44,3 +44,14 @@
     </form>
   </view>
 </scroll-view>
+<view class="mask" bindtap='hideMask' wx:if="{{showMask}}">
+  <view class="icon-wrap">
+    <!-- 提交成功提示  -->
+    <icon wx:if="{{showMask === 1}}" type='success' class='icon'></icon>
+    <!-- 填写不符合规范提示  -->
+    <icon wx:elif="{{showMask === 2}}" type='cancel' class='icon'></icon> 
+    <!-- 等待中提示  -->
+    <icon wx:elif="{{showMask === 3}}" type='waiting' class='icon'></icon> 
+    <view class='tip'>{{tip}}</view>
+  </view>
+</view>

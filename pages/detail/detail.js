@@ -7,8 +7,10 @@ Page({
    */
   data: {
     page: {},
-    topicIndex: 1,
-    resultData: {}
+    resultData: {},
+    showMask: 0,
+    tip: '',
+    topicNum: 0
   },
 
   /**
@@ -31,7 +33,7 @@ Page({
       return item;
     });
     data.topics = topics;
-    this.setData({ "page": data });
+    this.setData({ "page": data, topicNum: order - 1 });
   },
 
   /**
@@ -99,35 +101,66 @@ Page({
    * 遍历detail中的值，放到resultData中
    */
   bindFormSubmit: function (e) {
+    const _this = this;
     const answer = Object.assign({}, this.data.resultData, e.detail.value);
-    console.log(answer)
+    const token = app.globalData.token;
+    // 验证数据是否填完
+    if (Object.keys(answer).some(key => {
+      return !answer[key];
+    })) {
+      this.tipShow(2, '请完成问卷再提交～');
+      return;
+    }
     wx.request({
-      url: 'https://qs.chirsen.com/api/uploadAnswer', //仅为示例，并非真实的接口地址
-      method: 'POST',
+      url: 'https://qs.chirsen.com/api/uploadAnswer?_csrf=' + token, //仅为示例，并非真实的接口地址
       data: {
         id: app.globalData.detailData._id,
-        answer: answer,
-        "_csrf": app.globalData.token
+        answer: JSON.stringify(answer)
       },
       header: {
-        'content-type': 'application/json' // 默认值
+        'content-type': 'application/json', // 默认值
+        '_csrf': token
       },
       success: function (res) {
         if(+res.data.code === 200) {
-          app.app.globalData.detailData = null;
-          wx.navigateTo({
-            url: '../list/list'
-          });
+          app.globalData.detailData = null;
+          _this.tipShow(1, '感谢您的参与');
         } else {
-
+          _this.tipShow(3, '系统忙，请稍后提交');
         }
       }
     })
+  },
+  /**
+   * 隐藏mask
+   */
+  hideMask: function() {
+    this.setData({
+      showMask: false
+    });
+    wx.navigateTo({
+      url: '../list/list'
+    });
   },
   /**
    * 用于收集选项数据
    */
   collectData: function(id, val) {
     this.data.resultData[id] = val;
+  },
+  /**
+   * 
+   */
+  tipShow: function (type, text) {
+    this.setData({
+      showMask: type,
+      tip: text
+    });
+    setTimeout(() => {
+      this.setData({
+        showMask: 0,
+        tip: ''
+      });
+    }, 2000);
   }
 })
