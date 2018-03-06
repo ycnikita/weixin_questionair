@@ -9,5 +9,6 @@
   </view>
   <view class="usermotto">
     <text class="user-motto">{{motto}}</text>
+    <view class="intro">点击头像查看问卷列表</view>
   </view>
 </view>
